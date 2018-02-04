@@ -1,0 +1,14 @@
+*.txt
+*.mat
+scratch*
+docs/*
+backup/*
+models/*
+working_train/*
+working_test/*
+*.xlsx
+*.pdf
+*.asv
+*.ics
+*.ids
+*/NIfTI_20140122/*
