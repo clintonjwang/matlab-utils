@@ -12,21 +12,18 @@ function mask_to_mesh( mask_path, save_path )
         save_path = [mask_path, '.off'];
     end
     
-    mask = get_mask(mask_path);
-    mask = permute(mask, [1,2,3]);
-    mask = imresize3(mask, dims .* [0.5,0.5,0.5], 'cubic');
+    mask = get_mask(mask_path, false);
+    mask = permute(mask, [2,1,3]);
     
-%     [x,y,z] = meshgrid(scales(2):scales(2)*2:lims(2),...
-%         scales(1):scales(1)*2:lims(1), scales(3):scales(3)*2:lims(3));
-    [x,y,z] = meshgrid(scales(1):scales(1)*5:lims(1),...
-        scales(2):scales(2)*5:lims(2), scales(3):scales(3)*2:lims(3));
+    [x,y,z] = meshgrid(scales(2):scales(2):lims(2),...
+        scales(1):scales(1):lims(1), scales(3):scales(3):lims(3));
     x = single(x);
     y = single(y);
     z = single(z);
     mask = mask > 0.01;
     [triangles,vertices] = MarchingCubes(x,y,z,mask,0.5);
-%     triangles = uint32(triangles);
-%     vertices = single(vertices);
+    triangles = uint32(triangles);
+    vertices = single(vertices);
     WriteTriangulatedMeshToOffFile(triangles',vertices',save_path);
 end
 

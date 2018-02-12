@@ -1,4 +1,8 @@
-function [mask] = get_mask(fpath)
+function [mask] = get_mask(fpath, transpose)
+
+    if nargin == 1
+        transpose = true;
+    end
 
     fileID = fopen([fpath,'.ics']);
     A = fscanf(fileID,'%c');
@@ -18,6 +22,8 @@ function [mask] = get_mask(fpath)
         mask(i(count),j(count),k(count))=1; 
     end
 
-    mask = transpose_mask_slices(mask, 'r');
+    if transpose
+        mask = transpose_mask_slices(mask, 'r');
+    end
 
 end 
