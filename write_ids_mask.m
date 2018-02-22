@@ -1,6 +1,10 @@
-function write_ids_mask( mask, search_path, save_dir, name )
+function write_ids_mask( mask, search_path, save_dir, name, include_mesh )
 %MAKE_IDS_MASK Summary of this function goes here
 %   write_ids_mask( mask, search_path, save_dir, name )
+    
+    if nargin == 4
+        include_mesh = true;
+    end
 
     fpath = try_find_file(search_path, '**/*.ics',...
                 'Select any .ics file for this study', '*.ics', true);
@@ -17,6 +21,9 @@ function write_ids_mask( mask, search_path, save_dir, name )
     fileID = fopen(ids_filename,'w');
     fwrite(fileID, mask);
     fclose('all');
+    
+    if include_mesh
+        mask_to_mesh(ids_filename(1:end-4))
+    end
 
 end
-
