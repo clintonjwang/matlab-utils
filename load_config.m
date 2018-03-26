@@ -11,4 +11,3 @@ function filename_map = load_config(filename)
     end
     fclose(fid);
 end
-
